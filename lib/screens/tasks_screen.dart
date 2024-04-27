@@ -95,6 +95,18 @@ class _TasksScreenState extends State<TasksScreen> {
       },
     );
   }
+    // Method to handle search functionality
+  void _searchTasks(String keyword) {
+    setState(() {
+      if (keyword.isNotEmpty) {
+        _foundToDo = todosList.where((todo) =>
+            todo.todoText.toLowerCase().contains(keyword.toLowerCase())).toList();
+      } else {
+        // If the search keyword is empty, display all tasks
+        _updateTasks();
+      }
+    });
+  }
 
   // Method to add a new task to the list
   void _addNewTask(String taskText) {
@@ -212,6 +224,8 @@ class _TasksScreenState extends State<TasksScreen> {
               ),
               child: TextField(
                 onChanged: (keyword) {
+                  _searchTasks(keyword);
+                  
                   // Implement search functionality if needed
                 },
                 decoration: InputDecoration(
